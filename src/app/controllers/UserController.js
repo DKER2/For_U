@@ -13,12 +13,17 @@ const createUser = async (req, res) => {
     const newUser = {
         userID, name: "Harry", username: "tquean15012003", email, password
     }
-
-    const user = new User(newUser);
-    console.log(req.body);
-    await user.save().then(() => {
-        res.send("Account Created!")
-    })
+    
+    try {
+        const user = new User(newUser);
+        await user.save().then(() => {
+             res.status(201).send("Account Created!")
+        })
+    } catch(err) {
+        console.log(err)
+        res.status(500).send("Sign up unsuccessfully")
+    }
+    
 }
 
 const signIn = async (req, res) => {
@@ -31,15 +36,15 @@ const signIn = async (req, res) => {
     const user = User.findOne({ 'email': email }).then(
         user => {
             if(user.password==hash){
-                res.send('Sign in successfully!');
+                res.status(200).send('Sign in successfully!');
             }
             else{
-                res.send('Password is incorrect!');
+                res.status(500).send('Email or password is invalid!');
             }
         }
     ).catch((err) => {
         console.log(err)
-        res.send('Account do not exists');
+        res.status(404).send('Account do not exists');
     })
 
     console.log(user);
