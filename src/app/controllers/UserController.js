@@ -44,7 +44,7 @@ const signIn = async (req, res) => {
         }
     ).catch((err) => {
         console.log(err)
-        res.status(404).send('Account do not exists');
+        res.status(500).send('Account do not exists');
     })
 
     console.log(user);
