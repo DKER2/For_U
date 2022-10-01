@@ -14,15 +14,15 @@ const createUser = async (req, res) => {
         userID, name: "Harry", username: "tquean15012003", email, password
     }
     
-    try {
-        const user = new User(newUser);
-        await user.save().then(() => {
-             res.status(201).send("Account Created!")
-        })
-    } catch(err) {
+
+    const user = new User(newUser);
+    await user.save().then(() => {
+         res.status().send("Account Created!")
+    }).catch((err) => {
         console.log(err)
         res.status(500).send("Sign up unsuccessfully")
-    }
+    })
+   
     
 }
 
